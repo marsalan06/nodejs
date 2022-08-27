@@ -1,0 +1,78 @@
+install node and npm, node -v, npm -v
+we can have the node console on terminal like browser console
+by using node and press enter
+to run index.js we use node index.js
+
+--> NOn blocking I/O model
+node js can handle multiple connection over single thread, incontrast to nginx/apache
+that is why we use this in real time chat applications
+
+--> common commands
+initiallize as a node project
+    --> npm init, it will ask for package name and version, description, entery point will be index.js
+        skip other req for now, it will create a package.json file within the folder,
+    
+    --> npm install <package_name> --save, this will add dependecies in package.json and create node modules folder
+        --no-save to not add to dependecies list
+        we dont push node_modules folder, if someone wants to use the project , he will type --> npm i 
+    --> npm -i -g <package_name> , global package for whole system
+    -->nodemon package is like a deamon that continuesly listens to change is files on ctrl+s,
+
+    Dev dependecies, --save-dev <package_name> is a package that is only used for developement reasons,
+    --> npm uninstall nodemon, its for uninstalling a package
+
+Package-lock.json, dependecies of dependecies are present in package-lock.json,
+we use require and module.export to export and import between js files, 
+module wrapper function, node js automatically wraps all modules(second.js) to allow its import export
+function(exports,require,module,__filename,__dirname). we can console.log this too.
+
+Nodejs docs, we will consider os module, we will directly write require('os'); as its builtin
+path is also a node module,
+
+we can use callback functions that are async in node js nature and thus is non blocking , so any code that follows after the call back runs first
+as shown in path_module fs read code,
+
+node modules (common) vs ecma script modules, common js modules are imported as var mod = require('module_name.js')
+while ecma script module are imported as, import {function_or_class} from 'module_name' and in the imported module use export {function_or_class} in the end, 
+the ecma script is used with .mjs extention , module_name.mjs,
+
+Common js modules example: We created 2 files module_first.js and module_second.js, and in module_second.js i placed a functiona and i exported it, 
+in module_first.js i used the require method to import the exported function of module_second.js, this is common export
+
+In es6 or ecma import export we use the above .mjs technique for module being imported i.e module_second.mjs and add "type":"module" in package.json file just above 
+dependecies line, the exported module also works if not named to extension .mjs and just keep it to .js but do mention extension in import statement
+we can by this logic import multiple functions from a module,if we add export default before a function we do not have to use {} to place the function name.
+
+Nodejs is event driven architecture, so we use events to take actions,we create and event by using eventemitter.on('event_name') while eventemitter.emit('event_name') to
+trigger that event.CHeck realtime chat application of harry,
+
+Build http server in node js, process.env is used to aquire port while ussing http as a main module, The process object is a global that provides information about, and control over, 
+the current Node.js process. As a global, it is always available to Node.js applications without using require(). for the server to update the code on save we can use,
+nodemon httpserver.js, Express is the framework for backend.
+For serving an html page i created index.html and placed bootstrap template
+ else if (req.url == '/hello'){
+        res.statusCode = 200;
+        const data = fs.readFileSync('index.html')
+        res.end(data.toString())
+    }
+this is how nodejs k basically render a html page.
+so we preffer express over it, 
+
+Express is imported usign require, object of express is made, port is assigned to a variable,
+app.get('/',(req,res)=>{
+    res.send("Hello this is express")
+})
+
+app.get('/about',(req,res)=>{
+    console.log(__dirname)
+    res.sendFile(path.join(__dirname+'/index.html'))
+})
+
+app.listen(port,()=>{
+    console.log('This server is running')
+})
+
+
+
+
+
